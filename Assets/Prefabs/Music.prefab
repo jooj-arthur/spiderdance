@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5248373394300352641}
   - component: {fileID: 2748981822057619053}
-  - component: {fileID: 3550113916478147791}
   - component: {fileID: -1976235885043690363}
+  - component: {fileID: 7958085094190191488}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -86,21 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &3550113916478147791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5336041048416177993}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec52e728dee502c4793bc877be169ddb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  musica:
-    nome: 
-    som: {fileID: 0}
 --- !u!61 &-1976235885043690363
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -146,3 +131,20 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 10, y: 8.87}
   m_EdgeRadius: 0
+--- !u!114 &7958085094190191488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5336041048416177993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec52e728dee502c4793bc877be169ddb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  musica:
+    nome: 
+  canGrab: 0
+  amp: 0.3
+  freq: 2
