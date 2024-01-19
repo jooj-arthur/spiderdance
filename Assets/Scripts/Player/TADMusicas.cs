@@ -25,40 +25,41 @@ public class Lista {
     public bool Cheia(int qtdMusicas){
         return qtdMusicas == 5;
     }
-    public void ComparaMusicas(Lista listaJogador, Lista listaCerta, ref int numeroAcertos, ref int removeu)
+    public void ComparaMusicas(Lista listaJogador, Lista listaCerta, ref int numeroAcertos, int qtdMusicas)
     {
         for (int i = 0; i < 5; i++)
         {
-            for (int j = 0; j < 5; j++)
+            for (int j = 0; j < qtdMusicas; j++)
             {
-                if (listaJogador.ListaMusicas[i] == listaCerta.ListaMusicas[j])
+                if (listaJogador.ListaMusicas[j] == listaCerta.ListaMusicas[i])
                 {
                     numeroAcertos++;
-                    break;
-                }
-                if (listaCerta.ListaMusicas[j] == "removida")
-                {
-                    removeu = 1;
                     break;
                 }
             }
         }
     }
+    
     public void RemoveMusica(string musica, ref int qtdMusicas)
     {
         int n;
         if(!Vazia(qtdMusicas)){
             n = ProcuraMusica(musica);
-            ListaMusicas[n] = "removida";
-            Debug.Log("Removido");
+            for (int i = n; i < ListaMusicas.Length - 1; i++)
+            {
+                ListaMusicas[i] = ListaMusicas[i + 1];
+            }
+            --qtdMusicas;
         }
     }
+
 
     public int ProcuraMusica(string musica)
     {
         for (int i = 0; i < 5; i++){
             if (ListaMusicas[i] == musica)
             {
+
                 return i;
             }
         }

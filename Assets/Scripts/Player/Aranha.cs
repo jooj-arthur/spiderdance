@@ -9,7 +9,7 @@ public class Aranha : MonoBehaviour {
     private float moveX;
     private Animator anim;
     public float speed, jumpForce;
-    public int numeroAcertos = 0, qtdMusicas = 0, pontuacao, removeu = 0;
+    public int numeroAcertos = 0, qtdMusicas = 0, pontuacao; //removeu = 0;
     public bool isGrounded, teste = true;
     public Transform player;
     public Lista listaJogador = new Lista(), listaCerta = new Lista();
@@ -18,11 +18,11 @@ public class Aranha : MonoBehaviour {
     public Random rand = new Random();
     public AudioClip sfxVenceuJogo, sfxPerdeuJogo;
     public AudioController audioController;
-    public Image q1,q2,q3,q4,q5;
+    public Image q1,q2,q3,q4,q5,song;
     public string mRemovida;
-    public Button b1,b2,b3,b4,b5;
+    public Button b1,b2,b3,b4,b5,b6;
 
-    public bool funcaoExecutada = false;
+    public bool funcaoExecutada = false, funcaoExecutada2 = false;
 
 
     
@@ -67,6 +67,7 @@ public class Aranha : MonoBehaviour {
         b3.gameObject.SetActive(false);
         b4.gameObject.SetActive(false);
         b5.gameObject.SetActive(false);
+        b6.gameObject.SetActive(false);
 
     }
     void Update() {
@@ -124,82 +125,71 @@ public class Aranha : MonoBehaviour {
         }
     }
 
-    void MensagemFinal() {
-        /*
-        if (numeroAcertos > 2)
-        {
-            audioController.ToqueSFX(sfxVenceuJogo);
-            anim.SetBool("nice", true);
-        }
-        else
-        {
-            audioController.ToqueSFX(sfxPerdeuJogo);
-            anim.SetBool("bad", true);
-        }
-        */
-        Invoke("TerminaJogo", 0.3f);
-    }
-    public void TerminaJogo() {
+    public void MensagemFinal() {
+        Time.timeScale = 0;
+        textMusic.gameObject.SetActive(false);
+        song.gameObject.SetActive(false);
+        Objetivo.text = "";
+        FinalJogo.text = "Deseja remover alguma musica coletada?";
         b1.gameObject.SetActive(true);
         b2.gameObject.SetActive(true);
         b3.gameObject.SetActive(true);
         b4.gameObject.SetActive(true);
         b5.gameObject.SetActive(true);
+        b6.gameObject.SetActive(true);
         b1.onClick.AddListener(delegate {task(0);});
         b2.onClick.AddListener(delegate {task(1);});
         b3.onClick.AddListener(delegate {task(2);});
         b4.onClick.AddListener(delegate {task(3);});
         b5.onClick.AddListener(delegate {task(4);});
+        b6.onClick.AddListener(delegate {task(5);});
         q1.sprite = listaJogador.ListaSprites[0];
         q2.sprite = listaJogador.ListaSprites[1];
         q3.sprite = listaJogador.ListaSprites[2];
         q4.sprite = listaJogador.ListaSprites[3];
         q5.sprite = listaJogador.ListaSprites[4];
-        Time.timeScale = 0;
-
-        /*
-        pontuacao = (numeroAcertos * 200);
-        FinalJogo.text = $"Voce acertou {numeroAcertos} musica{(numeroAcertos != 1 ? "s" : "")}, e fez {pontuacao} pontos!";
-        Time.timeScale = 0;
-        */
     }
 
     public void task(int i){
+        Time.timeScale = 1.0f;
+        int nErros;
         b1.gameObject.SetActive(false);
         b2.gameObject.SetActive(false);
         b3.gameObject.SetActive(false);
         b4.gameObject.SetActive(false);
         b5.gameObject.SetActive(false);
-        int nErros;
-        listaJogador.RemoveMusica(listaJogador.ListaMusicas[i], ref qtdMusicas);
+        b6.gameObject.SetActive(false);
+        if (i<5 && !funcaoExecutada2){
+            listaJogador.RemoveMusica(listaJogador.ListaMusicas[i], ref qtdMusicas);
+            funcaoExecutada2 = true;
+        }
         if (!funcaoExecutada)
         {
-            listaJogador.ComparaMusicas(listaJogador, listaCerta, ref numeroAcertos, ref removeu);
+            listaJogador.ComparaMusicas(listaJogador, listaCerta, ref numeroAcertos, qtdMusicas);
             funcaoExecutada = true;
         }
-        nErros = (5-(numeroAcertos+removeu));
+
+        nErros = (qtdMusicas-(numeroAcertos));
         if (numeroAcertos > 2)
         {
-            audioController.ToqueSFX(sfxVenceuJogo);
             anim.SetBool("nice", true);
-            Invoke("terminaa", 0.3f);
+            audioController.ToqueSFX(sfxVenceuJogo);
+            Invoke("TerminaJogo", 0.3f); 
         }
         else
         {
-            audioController.ToqueSFX(sfxPerdeuJogo);
             anim.SetBool("bad", true);
-            Invoke("terminaa", 0.3f);
+            audioController.ToqueSFX(sfxPerdeuJogo);
+            Invoke("TerminaJogo", 0.3f);
         }
         pontuacao = (numeroAcertos * 200) - (nErros*25);
         FinalJogo.text = $"Voce acertou {numeroAcertos} musica{(numeroAcertos != 1 ? "s" : "")}, e fez {pontuacao} pontos!";
 
     }
+    
 
-    void terminaa(){
+    void TerminaJogo(){
         Time.timeScale = 0;
     }
 
-
-    
-    
 }
