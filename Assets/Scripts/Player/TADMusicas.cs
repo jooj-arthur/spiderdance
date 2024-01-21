@@ -54,12 +54,9 @@ public class Lista {
     }
 
 
-    public int ProcuraMusica(string musica)
-    {
+    public int ProcuraMusica(string musica) {
         for (int i = 0; i < 5; i++){
-            if (ListaMusicas[i] == musica)
-            {
-
+            if (ListaMusicas[i] == musica) {
                 return i;
             }
         }

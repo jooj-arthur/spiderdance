@@ -1,5 +1,4 @@
 using System.Collections;
-// using System.Collections.Generic; // vê se funciona sem essa
 using UnityEngine;
 using TMPro;
 using Random = System.Random;
@@ -8,9 +7,15 @@ public class Aranha : MonoBehaviour {
     private Rigidbody2D rb;
     private float moveX;
     private Animator anim;
+
+    // configurações de movimento
     public float speed, jumpForce;
-    public int numeroAcertos = 0, qtdMusicas = 0, pontuacao; //removeu = 0;
-    public bool isGrounded, teste = true;
+
+    // contadores e flags
+    public int numeroAcertos = 0, qtdMusicas = 0, pontuacao;
+    public bool isGrounded, teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
+    
+    // objetos e componentes
     public Transform player;
     public Lista listaJogador = new Lista(), listaCerta = new Lista();
     public Lista[] listasCertas = new Lista[5];
@@ -18,17 +23,12 @@ public class Aranha : MonoBehaviour {
     public Random rand = new Random();
     public AudioClip sfxVenceuJogo, sfxPerdeuJogo;
     public AudioController audioController;
-    public Image q1,q2,q3,q4,q5,song;
+    public Image[] imagens = new Image[5];
+    public Image song;
     public string mRemovida;
-    public Button b1,b2,b3,b4,b5,b6;
-
-    public bool funcaoExecutada = false, funcaoExecutada2 = false;
-
-
+    public Button[] botoes = new Button[6];
     
-    void Start() {
-        anim = GetComponent<Animator>();
-        rb = GetComponent<Rigidbody2D>();
+    void InicializaListas() {
         char startChar = 'a';
 		for (int i = 0; i < listasCertas.Length; i++) {
 			listasCertas[i] = new Lista();
@@ -37,42 +37,30 @@ public class Aranha : MonoBehaviour {
 				startChar++;
 			}
 		}
+    }
+
+    void Start() {
+        Debug.Log("Iniciei");
+        anim = GetComponent<Animator>();
+        rb = GetComponent<Rigidbody2D>();
+        InicializaListas();
         int generoEscolhido = rand.Next(0, 5);
 		listaCerta = listasCertas[generoEscolhido];
-		switch (generoEscolhido) {
-			case 0:
-				Objetivo.text = "Encontre todas as musicas do Radiohead";
-                //a,b,c,d,e
-				break;
-			case 1:
-				Objetivo.text = "Encontre todas as musicas de Rock";
-                //f,g,h,i,j
-				break;
-			case 2:
-				Objetivo.text = "Encontre todas as musicas Pop";
-                //k,l,m,n,o
-				break;
-			case 3:
-				Objetivo.text = "Encontre todas os musicas Gospel";
-                //p,q,r,s,t
-				break;
-			case 4:
-				Objetivo.text = "Encontre todas as musicas Sertanejas";
-                //u,v,w,x,y
-				break;
-		}
-
-        b1.gameObject.SetActive(false);
-        b2.gameObject.SetActive(false);
-        b3.gameObject.SetActive(false);
-        b4.gameObject.SetActive(false);
-        b5.gameObject.SetActive(false);
-        b6.gameObject.SetActive(false);
-
+        string[] objetivos = {
+            "Encontre todas as musicas do Radiohead",
+            "Encontre todas as musicas de Rock",
+            "Encontre todas as musicas Pop",
+            "Encontre todas os musicas Gospel",
+            "Encontre todas as musicas Sertanejas"
+        };
+		Objetivo.text = objetivos[generoEscolhido];
+        foreach (Button botao in botoes) {
+            botao.gameObject.SetActive(false);
+        }
     }
     void Update() {
         moveX = Input.GetAxisRaw("Horizontal");
-        if (player != null) {
+        if (player != null) { // essa verificação é necessária?
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
         }
         textMusic.text = $"{qtdMusicas}/5";
@@ -80,30 +68,20 @@ public class Aranha : MonoBehaviour {
     void FixedUpdate() {
         Move();
         Catch();
-        if(teste == true && qtdMusicas == 5){
+        if (teste && qtdMusicas == 5){
             MensagemFinal();
             teste = false;
         }
-        
-        if (isGrounded) {
-            if (Input.GetButtonDown("Jump")) {
-                Jump();
-            }
+        if (isGrounded && Input.GetButtonDown("Jump")) {
+            Jump();
         }
-
-
- 
     }
-
-
     void Move() {
 		rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
 		if (moveX != 0) {
 			transform.eulerAngles = new Vector3(0f, moveX > 0 ? 0f : 180f, 0f);
-			anim.SetBool("isRunning", true);
-		} else {
-			anim.SetBool("isRunning", false);
 		}
+		anim.SetBool("isRunning", moveX != 0);
 	}
     void Jump() {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
@@ -118,78 +96,48 @@ public class Aranha : MonoBehaviour {
             isGrounded = false;
         }
     }
-    
     void Catch() {
         if (Input.GetButtonDown("Fire1")) {
             anim.Play("SpiderCatching", -1);
         }
     }
-
     public void MensagemFinal() {
         Time.timeScale = 0;
         textMusic.gameObject.SetActive(false);
         song.gameObject.SetActive(false);
         Objetivo.text = "";
         FinalJogo.text = "Deseja remover alguma musica coletada?";
-        b1.gameObject.SetActive(true);
-        b2.gameObject.SetActive(true);
-        b3.gameObject.SetActive(true);
-        b4.gameObject.SetActive(true);
-        b5.gameObject.SetActive(true);
-        b6.gameObject.SetActive(true);
-        b1.onClick.AddListener(delegate {task(0);});
-        b2.onClick.AddListener(delegate {task(1);});
-        b3.onClick.AddListener(delegate {task(2);});
-        b4.onClick.AddListener(delegate {task(3);});
-        b5.onClick.AddListener(delegate {task(4);});
-        b6.onClick.AddListener(delegate {task(5);});
-        q1.sprite = listaJogador.ListaSprites[0];
-        q2.sprite = listaJogador.ListaSprites[1];
-        q3.sprite = listaJogador.ListaSprites[2];
-        q4.sprite = listaJogador.ListaSprites[3];
-        q5.sprite = listaJogador.ListaSprites[4];
+        for (int i = 0; i < botoes.Length; i++) {
+            botoes[i].gameObject.SetActive(true);
+            botoes[i].onClick.AddListener(delegate {task(i);});
+        }
+        for (int i = 0; i < imagens.Length; i++) {
+            imagens[i].sprite = listaJogador.ListaSprites[i];
+        }
     }
-
-    public void task(int i){
+    public void task(int i) {
         Time.timeScale = 1.0f;
         int nErros;
-        b1.gameObject.SetActive(false);
-        b2.gameObject.SetActive(false);
-        b3.gameObject.SetActive(false);
-        b4.gameObject.SetActive(false);
-        b5.gameObject.SetActive(false);
-        b6.gameObject.SetActive(false);
-        if (i<5 && !funcaoExecutada2){
+        foreach (Button botao in botoes) {
+            botao.gameObject.SetActive(false);
+        }
+        if (i < 5 && !funcaoExecutada2) {
             listaJogador.RemoveMusica(listaJogador.ListaMusicas[i], ref qtdMusicas);
             funcaoExecutada2 = true;
         }
-        if (!funcaoExecutada)
-        {
+        if (!funcaoExecutada) {
             listaJogador.ComparaMusicas(listaJogador, listaCerta, ref numeroAcertos, qtdMusicas);
             funcaoExecutada = true;
         }
-
-        nErros = (qtdMusicas-(numeroAcertos));
-        if (numeroAcertos > 2)
-        {
-            anim.SetBool("nice", true);
-            audioController.ToqueSFX(sfxVenceuJogo);
-            Invoke("TerminaJogo", 0.3f); 
-        }
-        else
-        {
-            anim.SetBool("bad", true);
-            audioController.ToqueSFX(sfxPerdeuJogo);
-            Invoke("TerminaJogo", 0.3f);
-        }
-        pontuacao = (numeroAcertos * 200) - (nErros*25);
+        nErros = qtdMusicas - numeroAcertos;
+        bool venceu = numeroAcertos > 2;
+        anim.SetBool(venceu ? "nice" : "bad", true);
+        audioController.ToqueSFX(venceu ? sfxVenceuJogo : sfxPerdeuJogo);
+        Invoke("TerminaJogo", 0.3f);
+        pontuacao = numeroAcertos * 200 - nErros * 25;
         FinalJogo.text = $"Voce acertou {numeroAcertos} musica{(numeroAcertos != 1 ? "s" : "")}, e fez {pontuacao} pontos!";
-
     }
-    
-
     void TerminaJogo(){
         Time.timeScale = 0;
     }
-
 }
