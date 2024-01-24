@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using Random = System.Random;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 public class Aranha : MonoBehaviour {
     private Rigidbody2D rb;
     private float moveX;
@@ -139,5 +140,6 @@ public class Aranha : MonoBehaviour {
     }
     void TerminaJogo(){
         Time.timeScale = 0;
+        SceneManager.LoadScene("Menu");
     }
 }
