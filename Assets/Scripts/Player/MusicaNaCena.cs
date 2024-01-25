@@ -18,7 +18,7 @@ public class MusicaNaCena : MonoBehaviour {
     }
     private void OnTriggerStay2D(Collider2D other) {
         Aranha aranha = other.GetComponent<Aranha>();
-        if (canGrab && Input.GetButtonDown("Fire1") && other.CompareTag("Player")) {
+        if (Input.GetMouseButtonDown(0) && other.CompareTag("Player")) {
             Debug.Log("pegou");
             aranha.listaJogador.AddMusica(musica.nome, musica.sprite, ref aranha.qtdMusicas);
             Destroy(this.gameObject);
