@@ -3,21 +3,27 @@ using System.Collections.Generic;
 using UnityEngine;
 public class MusicaNaCena : MonoBehaviour {
     [SerializeField] private Musica musica;
-    public bool canGrab = false;
+    //public bool canGrab = false;
     public float amp, freq;
     Vector3 initpos;
-    private void OnTriggerEnter2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            canGrab = true;
-        }
-    }
-    private void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("Player")) {
-            canGrab = false;
-        }
-    }
+    // private void OnTriggerEnter2D(Collider2D other) {
+    //     if (other.CompareTag("Player")) {
+    //         canGrab = true;
+    //         Debug.Log("pegavel");
+    //     }
+    // }
+    // private void OnTriggerExit2D(Collider2D other) {
+    //     if (other.CompareTag("Player")) {
+    //         canGrab = false;
+    //         Debug.Log("nao pegavel");
+    //     }
+    // }
+    //Códigos inúteis?
+
     private void OnTriggerStay2D(Collider2D other) {
         Aranha aranha = other.GetComponent<Aranha>();
+        if (other.CompareTag("Player"))
+            Debug.Log("pegavel");
         if (Input.GetMouseButtonDown(0) && other.CompareTag("Player")) {
             Debug.Log("pegou");
             aranha.listaJogador.AddMusica(musica.nome, musica.sprite, ref aranha.qtdMusicas);
