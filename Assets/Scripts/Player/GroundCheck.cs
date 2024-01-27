@@ -24,4 +24,9 @@ public class GroundCheck : MonoBehaviour
         Debug.Log(G);
         return G;
     }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red; // ou qualquer cor que você preferir
+        Gizmos.DrawWireSphere(transform.position, tam);
+    }
 }
