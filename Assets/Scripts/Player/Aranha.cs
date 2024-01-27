@@ -15,10 +15,6 @@ public class Aranha : MonoBehaviour {
     // contadores e flags
     public int numeroAcertos = 0, qtdMusicas = 0, pontuacao;
     public bool isGrounded, teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
-
-    public Transform GroundCheck;
-
-    public LayerMask Ground;
     
     // objetos e componentes
     public Transform player;
@@ -64,7 +60,6 @@ public class Aranha : MonoBehaviour {
         }
     }
     void Update() {
-        Catch();
         moveX = Input.GetAxisRaw("Horizontal");
         if (player != null) { // essa verificação é necessária?
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
@@ -73,6 +68,7 @@ public class Aranha : MonoBehaviour {
     }
     void FixedUpdate() {
         Move();
+        Catch();
         if (teste && qtdMusicas == 5){
             MensagemFinal();
             teste = false;
@@ -90,21 +86,19 @@ public class Aranha : MonoBehaviour {
 	}
     void Jump() {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        isGrounded = false;
         anim.SetBool("isJumping", true);
     }
-
-
-    private void OnTriggerEnter2D(Collider2D other) {
-        if(other.CompareTag("Ground"))
-        {
-            isGrounded = true;
-            anim.SetBool("isJumping", false);
+    void OnCollisionEnter2D(Collision2D collision) {
+        isGrounded = collision.gameObject.tag == "Ground";
+        anim.SetBool("isJumping", false);
+    }
+    void OnCollisionExit2D(Collision2D collision) {
+        if (collision.gameObject.tag == "Ground") {
+            isGrounded = false;
         }
     }
-
     void Catch() {
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetButtonDown("Fire1")) {
             anim.Play("SpiderCatching", -1);
         }
     }
