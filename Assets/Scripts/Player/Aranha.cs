@@ -142,4 +142,5 @@ public class Aranha : MonoBehaviour {
         Time.timeScale = 0;
         SceneManager.LoadScene("Menu");
     }
+    //
 }
