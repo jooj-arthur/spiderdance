@@ -16,6 +16,9 @@ public class Aranha : MonoBehaviour {
     public int numeroAcertos = 0, qtdMusicas = 0, pontuacao;
     public bool isGrounded, teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
 
+    public Transform GroundCheck;
+
+    public LayerMask Ground;
     
     // objetos e componentes
     public Transform player;
@@ -28,7 +31,6 @@ public class Aranha : MonoBehaviour {
     public Image[] imagens = new Image[5];
     public Image song;
     public string mRemovida;
-    public LayerMask Ground;
     public Button[] botoes = new Button[6];
     
     void InicializaListas() {
