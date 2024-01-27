@@ -6,22 +6,19 @@ public class MusicaNaCena : MonoBehaviour {
     public bool canGrab = false;
     public float amp, freq;
     Vector3 initpos;
+    Aranha aranha;
     private void OnTriggerEnter2D(Collider2D other) {
+        aranha = other.GetComponent<Aranha>();
         if (other.CompareTag("Player")) {
             canGrab = true;
+            GetComponent<SpriteRenderer>().color=Color.yellow;
         }
     }
     private void OnTriggerExit2D(Collider2D other) {
+        aranha = null;
         if (other.CompareTag("Player")) {
             canGrab = false;
-        }
-    }
-    private void OnTriggerStay2D(Collider2D other) {
-        Aranha aranha = other.GetComponent<Aranha>();
-        if (canGrab && Input.GetButtonDown("Fire1") && other.CompareTag("Player")) {
-            Debug.Log("pegou");
-            aranha.listaJogador.AddMusica(musica.nome, musica.sprite, ref aranha.qtdMusicas);
-            Destroy(this.gameObject);
+            GetComponent<SpriteRenderer>().color=Color.white;
         }
     }
 
@@ -31,6 +28,13 @@ public class MusicaNaCena : MonoBehaviour {
 
     private void Update(){
     transform.position = new Vector3(initpos.x,Mathf.Sin(Time.time * freq) * amp + initpos.y,0);
+
+    if (Input.GetButtonDown("Fire1") && canGrab) {
+            Debug.Log("pegou");
+            aranha.listaJogador.AddMusica(musica.nome, musica.sprite, ref aranha.qtdMusicas);
+            Destroy(this.gameObject);
+        }
+
     }
     
 

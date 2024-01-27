@@ -14,7 +14,7 @@ public class Aranha : MonoBehaviour {
 
     // contadores e flags
     public int numeroAcertos = 0, qtdMusicas = 0, pontuacao;
-    public bool isGrounded, teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
+    public bool teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
     
     // objetos e componentes
     public Transform player;
@@ -28,6 +28,8 @@ public class Aranha : MonoBehaviour {
     public Image song;
     public string mRemovida;
     public Button[] botoes = new Button[6];
+    
+    public GroundCheck gCheck;
     
     void InicializaListas() {
         char startChar = 'a';
@@ -60,6 +62,7 @@ public class Aranha : MonoBehaviour {
         }
     }
     void Update() {
+        Catch();
         moveX = Input.GetAxisRaw("Horizontal");
         if (player != null) { // essa verificação é necessária?
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
@@ -68,12 +71,11 @@ public class Aranha : MonoBehaviour {
     }
     void FixedUpdate() {
         Move();
-        Catch();
         if (teste && qtdMusicas == 5){
             MensagemFinal();
             teste = false;
         }
-        if (isGrounded && Input.GetButtonDown("Jump")) {
+        if (gCheck.Grounded() && Input.GetButtonDown("Jump")) {
             Jump();
         }
     }
@@ -89,12 +91,10 @@ public class Aranha : MonoBehaviour {
         anim.SetBool("isJumping", true);
     }
     void OnCollisionEnter2D(Collision2D collision) {
-        isGrounded = collision.gameObject.tag == "Ground";
         anim.SetBool("isJumping", false);
     }
     void OnCollisionExit2D(Collision2D collision) {
         if (collision.gameObject.tag == "Ground") {
-            isGrounded = false;
         }
     }
     void Catch() {
