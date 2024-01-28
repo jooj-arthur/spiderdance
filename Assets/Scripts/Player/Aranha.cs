@@ -50,11 +50,11 @@ public class Aranha : MonoBehaviour {
         int generoEscolhido = rand.Next(0, 5);
 		listaCerta = listasCertas[generoEscolhido];
         string[] objetivos = {
-            "Encontre todas as musicas do Radiohead",
-            "Encontre todas as musicas de Rock",
-            "Encontre todas as musicas Pop",
-            "Encontre todas os musicas Gospel",
-            "Encontre todas as musicas Sertanejas"
+            "Faz eu rir não, mano", // emo, musicas tristes
+            "SILENCIO! E se liga nesse riff", // rock, metal
+            "Me sentindo uma diva!", // pop
+            "Não me chame de normie!", // alternativo, indie
+            "Hoje eu quero um dia de sossego, eu quero paz" // sertanejo
         };
 		Objetivo.text = objetivos[generoEscolhido];
         foreach (Button botao in botoes) {
@@ -68,16 +68,17 @@ public class Aranha : MonoBehaviour {
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
         }
         textMusic.text = $"{qtdMusicas}/5";
-    }
-    void FixedUpdate() {
-        Move();
+
+        if (gCheck.Grounded() && Input.GetButtonDown("Jump")) {
+            Jump();
+        }
         if (teste && qtdMusicas == 5){
             MensagemFinal();
             teste = false;
         }
-        if (gCheck.Grounded() && Input.GetButtonDown("Jump")) {
-            Jump();
-        }
+    }
+    void FixedUpdate() {
+        Move();
     }
     void Move() {
 		rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
