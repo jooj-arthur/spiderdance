@@ -4,7 +4,8 @@ using TMPro;
 using Random = System.Random;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-public class Aranha : MonoBehaviour {
+public class Aranha : MonoBehaviour
+{
     private Rigidbody2D rb;
     private float moveX;
     private Animator anim;
@@ -14,8 +15,12 @@ public class Aranha : MonoBehaviour {
 
     // contadores e flags
     public int numeroAcertos = 0, qtdMusicas = 0, pontuacao;
-    public bool teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
-    
+    public bool isGrounded, teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
+
+    public Transform GroundCheck;
+
+    public LayerMask Ground;
+
     // objetos e componentes
     public Transform player;
     public Lista listaJogador = new Lista(), listaCerta = new Lista();
@@ -27,28 +32,30 @@ public class Aranha : MonoBehaviour {
     public Image[] imagens = new Image[5];
     public Image song;
     public string mRemovida;
-    public Button[] botoes = new Button[6];
-    
-    public GroundCheck gCheck;
-    
-    void InicializaListas() {
+    public Button[] botoes = new Button[7];
+
+    void InicializaListas()
+    {
         char startChar = 'a';
-		for (int i = 0; i < listasCertas.Length; i++) {
-			listasCertas[i] = new Lista();
-			for (int j = 0; j < 5; j++) {
-				listasCertas[i].ListaMusicas[j] = startChar.ToString();
-				startChar++;
-			}
-		}
+        for (int i = 0; i < listasCertas.Length; i++)
+        {
+            listasCertas[i] = new Lista();
+            for (int j = 0; j < 5; j++)
+            {
+                listasCertas[i].ListaMusicas[j] = startChar.ToString();
+                startChar++;
+            }
+        }
     }
 
-    void Start() {
+    void Start()
+    {
         Debug.Log("Iniciei");
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         InicializaListas();
         int generoEscolhido = rand.Next(0, 5);
-		listaCerta = listasCertas[generoEscolhido];
+        listaCerta = listasCertas[generoEscolhido];
         string[] objetivos = {
             "Encontre todas as musicas do Radiohead",
             "Encontre todas as musicas de Rock",
@@ -56,77 +63,104 @@ public class Aranha : MonoBehaviour {
             "Encontre todas os musicas Gospel",
             "Encontre todas as musicas Sertanejas"
         };
-		Objetivo.text = objetivos[generoEscolhido];
-        foreach (Button botao in botoes) {
+        Objetivo.text = objetivos[generoEscolhido];
+        foreach (Button botao in botoes)
+        {
             botao.gameObject.SetActive(false);
         }
     }
-    void Update() {
+    void Update()
+    {
         Catch();
         moveX = Input.GetAxisRaw("Horizontal");
-        if (player != null) { // essa verificação é necessária?
+        if (player != null)
+        { // essa verificação é necessária?
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
         }
         textMusic.text = $"{qtdMusicas}/5";
     }
-    void FixedUpdate() {
+    void FixedUpdate()
+    {
         Move();
-        if (teste && qtdMusicas == 5){
+        if (teste && qtdMusicas == 5)
+        {
             MensagemFinal();
             teste = false;
         }
-        if (gCheck.Grounded() && Input.GetButtonDown("Jump")) {
+        if (isGrounded && Input.GetButtonDown("Jump"))
+        {
             Jump();
         }
     }
-    void Move() {
-		rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
-		if (moveX != 0) {
-			transform.eulerAngles = new Vector3(0f, moveX > 0 ? 0f : 180f, 0f);
-		}
-		anim.SetBool("isRunning", moveX != 0);
-	}
-    void Jump() {
+    void Move()
+    {
+        rb.velocity = new Vector2(moveX * speed, rb.velocity.y);
+        if (moveX != 0)
+        {
+            transform.eulerAngles = new Vector3(0f, moveX > 0 ? 0f : 180f, 0f);
+        }
+        anim.SetBool("isRunning", moveX != 0);
+    }
+    void Jump()
+    {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+        isGrounded = false;
         anim.SetBool("isJumping", true);
     }
-    void OnCollisionEnter2D(Collision2D collision) {
+
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        isGrounded = collision.gameObject.tag == "Ground";
         anim.SetBool("isJumping", false);
     }
-    void OnCollisionExit2D(Collision2D collision) {
-        if (collision.gameObject.tag == "Ground") {
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Ground")
+        {
+            isGrounded = false;
         }
     }
-    void Catch() {
-        if (Input.GetButtonDown("Fire1")) {
+
+    void Catch()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
             anim.Play("SpiderCatching", -1);
         }
     }
-    public void MensagemFinal() {
+    public void MensagemFinal()
+    {
         Time.timeScale = 0;
         textMusic.gameObject.SetActive(false);
         song.gameObject.SetActive(false);
         Objetivo.text = "";
         FinalJogo.text = "Deseja remover alguma musica coletada?";
-        for (int i = 0; i < botoes.Length; i++) {
+        for (int i = 0; i < botoes.Length; i++)
+        {
             botoes[i].gameObject.SetActive(true);
-            botoes[i].onClick.AddListener(delegate {task(i);});
+            botoes[i].onClick.AddListener(delegate { task(i); });
         }
-        for (int i = 0; i < imagens.Length; i++) {
+        for (int i = 0; i < imagens.Length; i++)
+        {
             imagens[i].sprite = listaJogador.ListaSprites[i];
         }
     }
-    public void task(int i) {
+    public void task(int i)
+    {
         Time.timeScale = 1.0f;
         int nErros;
-        foreach (Button botao in botoes) {
+        foreach (Button botao in botoes)
+        {
             botao.gameObject.SetActive(false);
         }
-        if (i < 5 && !funcaoExecutada2) {
+        if (i < 5 && !funcaoExecutada2)
+        {
             listaJogador.RemoveMusica(listaJogador.ListaMusicas[i], ref qtdMusicas);
             funcaoExecutada2 = true;
         }
-        if (!funcaoExecutada) {
+        if (!funcaoExecutada)
+        {
             listaJogador.ComparaMusicas(listaJogador, listaCerta, ref numeroAcertos, qtdMusicas);
             funcaoExecutada = true;
         }
@@ -134,13 +168,33 @@ public class Aranha : MonoBehaviour {
         bool venceu = numeroAcertos > 2;
         anim.SetBool(venceu ? "nice" : "bad", true);
         audioController.ToqueSFX(venceu ? sfxVenceuJogo : sfxPerdeuJogo);
-        Invoke("TerminaJogo", 0.3f);
+        Invoke("TerminaJogo", 5.0f);
         pontuacao = numeroAcertos * 200 - nErros * 25;
         FinalJogo.text = $"Voce acertou {numeroAcertos} musica{(numeroAcertos != 1 ? "s" : "")}, e fez {pontuacao} pontos!";
     }
-    void TerminaJogo(){
-        Time.timeScale = 0;
+    public void ReiniciarJogo()
+    {
+        numeroAcertos = 0;
+        qtdMusicas = 0;
+        pontuacao = 0;
+        isGrounded = true;
+        teste = true;
+        funcaoExecutada = false;
+        funcaoExecutada2 = false;
+
+        foreach (Button botao in botoes)
+        {
+            botao.gameObject.SetActive(true);
+        }
+
+        anim.SetBool("isRunning", false);
+        anim.SetBool("isJumping", false);
+        anim.SetBool("nice", false);
+        anim.SetBool("bad", false);
+    }
+    void TerminaJogo()
+    {
+        ReiniciarJogo();
         SceneManager.LoadScene("Menu");
     }
-    //
 }

@@ -330,7 +330,7 @@ Transform:
   m_GameObject: {fileID: 63659501}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -587, y: 191, z: 0}
+  m_LocalPosition: {x: 0, y: 190, z: 0}
   m_LocalScale: {x: 500, y: 400, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -399,7 +399,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -1486124668, guid: 187091d6e7be8114bbfb406c508bb324, type: 3}
-  m_Color: {r: 0.9622642, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -459,7 +459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.023985418, g: 0.5985979, b: 0.7264151, a: 1}
+  m_Color: {r: 0.24648452, g: 0.2735849, b: 0.2735849, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1374,8 +1374,8 @@ Canvas:
   m_GameObject: {fileID: 551671804}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 724925119}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -2328,7 +2328,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -455, y: 245}
+  m_AnchoredPosition: {x: -454.99994, y: 245}
   m_SizeDelta: {x: -910, y: -490}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &1512648094
@@ -2440,7 +2440,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: SpiderDance
+  m_text: Spider  Dance
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
@@ -2701,7 +2701,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3215,6 +3215,6 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 724925120}
-  - {fileID: 551671808}
-  - {fileID: 1009116447}
   - {fileID: 19611663}
+  - {fileID: 1009116447}
+  - {fileID: 551671808}

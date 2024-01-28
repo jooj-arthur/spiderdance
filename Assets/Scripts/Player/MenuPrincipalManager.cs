@@ -8,9 +8,19 @@ public class NewBehaviourScript : MonoBehaviour
     [SerializeField] private GameObject initialMenu;
     [SerializeField] private GameObject ControlsMenu;
 
+    void Start()
+    {
+        ReiniciarMenu();
+    }
+
     public void Play()
     {
-        SceneManager.LoadScene(GameLevel);
+        StartCoroutine(LoadGameLevel());
+    }
+
+    private IEnumerator LoadGameLevel()
+    {
+        yield return SceneManager.LoadSceneAsync(GameLevel);
         ControlsMenu.SetActive(false);
     }
 
@@ -30,6 +40,12 @@ public class NewBehaviourScript : MonoBehaviour
     {
         Debug.Log("Sair do jogo");
         Application.Quit();
+    }
+
+    private void ReiniciarMenu()
+    {
+        initialMenu.SetActive(true);
+        ControlsMenu.SetActive(false);
     }
 
 }
