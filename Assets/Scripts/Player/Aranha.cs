@@ -59,11 +59,11 @@ public class Aranha : MonoBehaviour
         int generoEscolhido = rand.Next(0, 5);
         listaCerta = listasCertas[generoEscolhido];
         string[] objetivos = {
-            "Faz eu rir nao, mano", //emo
-            "Agora o bicho vai pegar!!!", //rock
-            "Me sentindo uma diva!", //pop
-            "Nao me chame de normie!", //alternativo, india
-            "Hoje eu quero um dia de sossego, eu quero paz" //sertanejo
+            "Faz eu rir nao, mano", //emo a,b,c,d,e
+            "Agora o bicho vai pegar!!!", //rock f,g,h,i,j
+            "Me sentindo uma diva!", //pop k,l,m,n,o
+            "Nao me chame de normie!", //alternativo, indie p,q,r,s,t
+            "Hoje eu quero um dia de sossego, eu quero paz" //sertanejo u,v,w,x,y
         };
         Objetivo.text = objetivos[generoEscolhido];
         foreach (Button botao in botoes)
@@ -163,7 +163,9 @@ public class Aranha : MonoBehaviour
         anim.SetBool(venceu ? "nice" : "bad", true);
         audioController.ToqueSFX(venceu ? sfxVenceuJogo : sfxPerdeuJogo);
         Invoke("TerminaJogo", 5.0f);
-        pontuacao = numeroAcertos * 200 - nErros * 25;
+        pontuacao = numeroAcertos * 200 - nErros * 50;
+        if (pontuacao < 0)
+            pontuacao = 0;
         FinalJogo.text = $"Voce acertou {numeroAcertos} musica{(numeroAcertos != 1 ? "s" : "")}, e fez {pontuacao} pontos!";
     }
     public void ReiniciarJogo()
@@ -187,7 +189,7 @@ public class Aranha : MonoBehaviour
     }
     void TerminaJogo()
     {
-        ReiniciarJogo();
         SceneManager.LoadScene("Menu");
+        Invoke("ReiniciarJogo",1.0f);
     }
 }
