@@ -15,11 +15,13 @@ public class Aranha : MonoBehaviour
 
     // contadores e flags
     public int numeroAcertos = 0, qtdMusicas = 0, pontuacao;
-    public bool isGrounded, teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
+    public bool teste = true, funcaoExecutada = false, funcaoExecutada2 = false;
 
     public Transform GroundCheck;
 
     public LayerMask Ground;
+
+    public GroundCheck gCheck;
 
     // objetos e componentes
     public Transform player;
@@ -57,11 +59,11 @@ public class Aranha : MonoBehaviour
         int generoEscolhido = rand.Next(0, 5);
         listaCerta = listasCertas[generoEscolhido];
         string[] objetivos = {
-            "Encontre todas as musicas do Radiohead",
-            "Encontre todas as musicas de Rock",
-            "Encontre todas as musicas Pop",
-            "Encontre todas os musicas Gospel",
-            "Encontre todas as musicas Sertanejas"
+            "Faz eu rir nao, mano", //emo
+            "Agora o bixo vai pegar",
+            "Me sentindo uma diva!",
+            "Nao me chame de normie!",
+            "Hoje eu quero um dia de sossego, eu quero paz"
         };
         Objetivo.text = objetivos[generoEscolhido];
         foreach (Button botao in botoes)
@@ -78,19 +80,20 @@ public class Aranha : MonoBehaviour
             transform.position = new Vector3(player.position.x, player.position.y, transform.position.z);
         }
         textMusic.text = $"{qtdMusicas}/5";
-    }
-    void FixedUpdate()
-    {
-        Move();
+
         if (teste && qtdMusicas == 5)
         {
             MensagemFinal();
             teste = false;
         }
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (gCheck.Grounded() && Input.GetButtonDown("Jump"))
         {
             Jump();
         }
+    }
+    void FixedUpdate()
+    {
+        Move();
     }
     void Move()
     {
@@ -104,22 +107,13 @@ public class Aranha : MonoBehaviour
     void Jump()
     {
         rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-        isGrounded = false;
         anim.SetBool("isJumping", true);
     }
 
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        isGrounded = collision.gameObject.tag == "Ground";
         anim.SetBool("isJumping", false);
-    }
-    void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.tag == "Ground")
-        {
-            isGrounded = false;
-        }
     }
 
     void Catch()
@@ -177,7 +171,6 @@ public class Aranha : MonoBehaviour
         numeroAcertos = 0;
         qtdMusicas = 0;
         pontuacao = 0;
-        isGrounded = true;
         teste = true;
         funcaoExecutada = false;
         funcaoExecutada2 = false;
