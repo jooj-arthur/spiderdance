@@ -330,7 +330,7 @@ Transform:
   m_GameObject: {fileID: 63659501}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1, y: 210, z: 0}
+  m_LocalPosition: {x: -3, y: 201, z: 0}
   m_LocalScale: {x: 500, y: 500, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -397,7 +397,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_Sprite: {fileID: -1486124668, guid: 187091d6e7be8114bbfb406c508bb324, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
@@ -1227,7 +1227,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ' -  Move'
+  m_text: ' -  Mover'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
@@ -1806,9 +1806,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'EXIT
-
-'
+  m_text: SAIR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
@@ -1942,7 +1940,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-  Collect  Song'
+  m_text: '-  Coletar Musica
+
+'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
@@ -2574,7 +2574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: PLAY
+  m_text: JOGAR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
@@ -2999,7 +2999,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '-  Jump'
+  m_text: '-  Pular'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
@@ -3133,7 +3133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: CONTROLS
+  m_text: TUTORIAL
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}
   m_sharedMaterial: {fileID: 5944646964789782998, guid: fdba9f2bda9adc74cac39221466bd9f7, type: 2}

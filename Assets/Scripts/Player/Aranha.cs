@@ -60,10 +60,10 @@ public class Aranha : MonoBehaviour
         listaCerta = listasCertas[generoEscolhido];
         string[] objetivos = {
             "Faz eu rir nao, mano", //emo
-            "Agora o bixo vai pegar",
-            "Me sentindo uma diva!",
-            "Nao me chame de normie!",
-            "Hoje eu quero um dia de sossego, eu quero paz"
+            "Agora o bicho vai pegar!!!", //rock
+            "Me sentindo uma diva!", //pop
+            "Nao me chame de normie!", //alternativo, india
+            "Hoje eu quero um dia de sossego, eu quero paz" //sertanejo
         };
         Objetivo.text = objetivos[generoEscolhido];
         foreach (Button botao in botoes)
