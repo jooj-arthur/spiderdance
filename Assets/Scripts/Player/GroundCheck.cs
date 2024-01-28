@@ -12,12 +12,6 @@ public class GroundCheck : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     public bool Grounded(){
         bool G = Physics2D.OverlapCapsule(transform.position,new Vector2(0,tam),CapsuleDirection2D.Horizontal,0,Ground);
         Debug.Log(G);
