@@ -87,9 +87,7 @@ public class Aranha : MonoBehaviour
             teste = false;
         }
         if (gCheck.Grounded() && Input.GetButtonDown("Jump"))
-        {
             Jump();
-        }
     }
     void FixedUpdate()
     {
@@ -163,7 +161,7 @@ public class Aranha : MonoBehaviour
         anim.SetBool(venceu ? "nice" : "bad", true);
         audioController.ToqueSFX(venceu ? sfxVenceuJogo : sfxPerdeuJogo);
         Invoke("TerminaJogo", 5.0f);
-        pontuacao = numeroAcertos * 200 - nErros * 50;
+        pontuacao = numeroAcertos * 200 - nErros * i;
         if (pontuacao < 0)
             pontuacao = 0;
         FinalJogo.text = $"Voce acertou {numeroAcertos} musica{(numeroAcertos != 1 ? "s" : "")}, e fez {pontuacao} pontos!";

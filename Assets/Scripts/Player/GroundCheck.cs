@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class GroundCheck : MonoBehaviour
 {
-    // Start is called before the first frame update
     public Collider2D col;
     public float tam;
     public LayerMask Ground;
