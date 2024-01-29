@@ -168,6 +168,7 @@ public class Aranha : MonoBehaviour
     }
     public void ReiniciarJogo()
     {
+        int generoEscolhido = rand.Next(0, 5);
         numeroAcertos = 0;
         qtdMusicas = 0;
         pontuacao = 0;
